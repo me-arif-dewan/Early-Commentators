@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="stylesheet" href="index.css">
+  <title>المكثرون من مفسري السلف</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Arabic Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Parastoo:wght@400..700&display=swap" rel="stylesheet">
+</head>
+
+<body class="text-white">
+
+  <!-- Main Container -->
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-2">
+      <div class="flex items-center gap-2 glass rounded-xl px-3 py-2">
+        <button id="fontDecBtn" class="font-bold w-9 h-9 rounded-lg hover:bg-white/10 active:bg-white/20 transition disabled:opacity-40 disabled:cursor-not-allowed text-2xl">ا−</button>
+        <span id="fontSizeLabel" class="text-xl w-12 text-center">18px</span>
+        <button id="fontIncBtn" class="font-bold w-9 h-9 rounded-lg hover:bg-white/10 active:bg-white/20 transition disabled:opacity-40 disabled:cursor-not-allowed text-2xl">ا+</button>
+      </div>
+      <button id="themeBtn" class="glass rounded-xl px-3 py-2 text-xl font-bold hover:opacity-80 transition">🌙 داكن</button>
+    </div>
+
+    <!-- Landing Screen -->
+    <div id="landingScreen" class="min-h-[85vh] flex flex-col justify-center items-center text-center fade-in">
+
+      <div class="glass rounded-3xl p-10 w-full max-w-2xl shadow-2xl">
+        <h1 class="text-5xl md:text-6xl font-extrabold gold mb-6">
+          المكثرون من مفسري السلف
+        </h1>
+
+        <p class="text-gray-300 text-3xl mb-8 leading-loose">
+          اختبر معرفتك بعلماء التفسير ورواة الحديث والطبقات والوفيات والملاحظات المهمة.
+        </p>
+
+        <!-- Question Count Selector -->
+        <div class="mb-8">
+          <label class="text-gray-300 text-2xl block mb-2">عدد الأسئلة</label>
+          <div class="flex items-center justify-center gap-3">
+            <button id="qDecBtn" class="glass w-10 h-10 rounded-xl font-bold text-xl hover:bg-white/10 active:bg-white/20 transition">-</button>
+            <span id="qCountLabel" class="text-2xl font-bold gold w-16 text-center">10</span>
+            <button id="qIncBtn" class="glass w-10 h-10 rounded-xl font-bold text-xl hover:bg-white/10 active:bg-white/20 transition">+</button>
+          </div>
+          <div class="flex justify-center gap-2 mt-3 flex-wrap">
+            <button onclick="setQCount(10)" class="glass px-3 py-1 rounded-lg text-lg hover:bg-white/10 transition">10</button>
+            <button onclick="setQCount(20)" class="glass px-3 py-1 rounded-lg text-lg hover:bg-white/10 transition">20</button>
+            <button onclick="setQCount(50)" class="glass px-3 py-1 rounded-lg text-lg hover:bg-white/10 transition">50</button>
+            <button onclick="setQCount(100)" class="glass px-3 py-1 rounded-lg text-lg hover:bg-white/10 transition">100</button>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            id="startBtn"
+            class="btn-main bg-green-600 hover:bg-green-500 active:bg-green-700 text-white text-xl font-bold py-4 px-8 rounded-2xl shadow-lg"
+          >
+            ابدأ اللعبة
+          </button>
+
+          <button
+            id="stopBtn"
+            disabled
+            class="bg-gray-600 text-gray-300 text-xl font-bold py-4 px-8 rounded-2xl opacity-50 cursor-not-allowed"
+          >
+            إيقاف اللعبة
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="hidden fade-in">
+
+      <!-- Top Stats -->
+      <div class="grid grid-cols-3 gap-2 mb-4">
+
+        <div class="glass rounded-2xl p-3 text-center">
+          <div class="text-gray-300 text-2xl">النتيجة</div>
+          <div id="scoreDisplay" class="text-2xl font-bold gold">0</div>
+        </div>
+
+        <div class="glass rounded-2xl p-3 text-center">
+          <div class="text-gray-300 text-2xl">السؤال</div>
+          <div id="questionCounter" class="text-2xl font-bold text-green-400">1</div>
+        </div>
+
+        <div class="glass rounded-2xl p-3 text-center">
+          <div class="text-gray-300 text-2xl">الوقت</div>
+          <div id="timerDisplay" class="text-2xl font-bold text-red-400">30</div>
+        </div>
+
+      </div>
+
+      <!-- Game Controls -->
+      <div class="flex justify-end gap-2 mb-3">
+        <button
+          id="skipBtn"
+          disabled
+          class="btn-main bg-orange-500 hover:bg-orange-400 active:bg-orange-600 text-white font-bold py-2 px-5 rounded-2xl text-sm opacity-50 cursor-not-allowed"
+        >
+          ⏭ تخطي
+        </button>
+        <button
+          id="pauseBtn"
+          disabled
+          class="btn-main bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold py-2 px-5 rounded-2xl text-sm opacity-50 cursor-not-allowed"
+        >
+          ⏸ إيقاف مؤقت
+        </button>
+      </div>
+
+      <!-- Timer Bar -->
+      <div class="w-full bg-gray-700 rounded-full h-4 mb-8 overflow-hidden">
+        <div id="timerBar" class="timer-bar h-full bg-gradient-to-l from-red-500 to-green-500 w-full"></div>
+      </div>
+
+      <!-- Question Box -->
+      <div class="glass rounded-3xl p-4 sm:p-8 shadow-2xl">
+
+        <h2
+          id="questionText"
+          class="text-3xl font-bold mb-6 leading-loose text-center"
+        ></h2>
+
+        <div
+          id="optionsContainer"
+          class="grid gap-4"
+        ></div>
+
+        <!-- Note Area -->
+        <div
+          id="noteBox"
+          class="hidden mt-8 bg-yellow-500/10 border border-yellow-400 rounded-2xl p-5"
+        >
+          <div class="gold font-bold mb-2">ملاحظة مهمة</div>
+          <div id="noteText" class="text-gray-200 leading-loose"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Final Screen -->
+    <div id="finalScreen" class="hidden min-h-[80vh] flex items-center justify-center fade-in">
+
+      <div class="glass rounded-3xl p-8 text-center w-full max-w-2xl">
+
+        <h2 class="text-4xl font-extrabold gold mb-6">
+          انتهت اللعبة
+        </h2>
+
+        <div class="text-lg text-gray-300 mb-3">
+          نتيجتك النهائية
+        </div>
+
+        <div id="finalScore" class="text-5xl font-bold text-green-400 mb-4">
+          0%
+        </div>
+
+        <div id="finalDetails" class="text-gray-300 text-base mb-8"></div>
+
+        <button
+          id="playAgainBtn"
+          class="btn-main bg-green-600 hover:bg-green-500 active:bg-green-700 text-white text-xl font-bold py-4 px-8 rounded-2xl"
+        >
+          العب مرة أخرى بنفس الإعدادات
+        </button>
+
+        <button
+          id="restartBtn"
+          class="btn-main bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 text-black text-xl font-bold py-4 px-8 rounded-2xl"
+        >
+          ابدأ من جديد
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="index.js"></script>
+</body>
+</html>
