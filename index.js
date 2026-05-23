@@ -62,7 +62,7 @@ const qIncBtn = document.getElementById("qIncBtn");
 const qDecBtn = document.getElementById("qDecBtn");
 const qCountLabel = document.getElementById("qCountLabel");
 
-function setQCount(n) {
+window.setQCount = function(n) {
     totalQuestions = Math.max(5, Math.min(200, n));
     qCountLabel.textContent = totalQuestions;
 }
